@@ -1,15 +1,12 @@
 #!/bin/bash
-
-#User define
-FILE="changeme" #file2
+#spinning untile remote is on
+FILE="file7_100files" #file2
 ABS_FILE_PRE=`pwd`
 ABS_FILE="$ABS_FILE_PRE"/"$FILE"
-remote_ip="10.1.1.105"
 
-#parse input parameters
+remote_ip="10.1.1.105"
 echo "got $# arguments"
 
-#spinning untile remote is on
 echo "trying..."
 while [ "$tmp" != "123" ] 
 do
@@ -32,21 +29,6 @@ then
     #do 
     #done
 fi
-#echo ""
-#echo ""
-#echo ""
-#tmp1=$(lsmod | grep "msg_layer ")
-#tmp2=$(ssh 10.1.1.105 lsmod |grep "msg_layer ")
-#if [ "$tmp1" != "" ] 
-#then
-#    echo "local: $tmp1"
-#    exit
-#fi
-#if [ "$tmp2" != "" ] 
-#then
-#    echo "remote: $tmp2"
-#    exit
-#fi
 
 
 tmp1=$(lsmod | grep "msg_layer " |wc -l)
@@ -64,14 +46,6 @@ fi
 echo "->->-> Remote is alive."
 sleep 1
 
-#echo "checking remote is alive..."
-#tmp=$(ssh 10.1.1.105 echo "123")
-#if [ "$tmp" != "123" ] 
-#then
-#    exit
-#else
-#    echo "-> Remote is alive."
-#fi
 
 echo -n "installing msg layer"
 ssh $remote_ip sudo insmod msg_layer.ko&
@@ -95,8 +69,8 @@ make clean
 make
 cd ..
 ssh $remote_ip rm -r $ABS_FILE
-ssh $remote_ip mkdir -p $ABS_FILE_PRE
-scp -r $ABS_FILE $remote_ip:$ABS_FILE_PRE
+ssh $remote_ip mkdir -p $ABS_FILE_PRE ####
+scp -r $ABS_FILE $remote_ip:$ABS_FILE_PRE ####
 
 
 sleep 0.5
